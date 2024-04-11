@@ -6,7 +6,9 @@
 
   .box {
     padding: 20px;
-    border: 2px solid gray;
+    box-shadow: 2px -8px 30px -4px rgba(136, 132, 216, 0.75);
+    -webkit-box-shadow: 2px -8px 30px -4px rgba(136, 132, 216, 0.75);
+    -moz-box-shadow: 2px -8px 30px -4px rgba(136, 132, 216, 0.75);
   }
   .box1 {
     display: flex;
@@ -28,7 +30,6 @@
     padding: 10px;
   }
   .box5 {
-    grid-row: span 2;
     background-color: white;
   }
 }

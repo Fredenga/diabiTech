@@ -25,7 +25,11 @@ const Daydata: React.FC<Props> = ({ data, dataKey, title }) => {
           <BarChart width={200} height={100} data={data}>
             <XAxis dataKey="date" />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ background: "#2a3447", borderRadius: "5px" }}
+              labelStyle={{ display: "none" }}
+              cursor={{ fill: "none" }}
+            />
             <Bar dataKey={dataKey} fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>

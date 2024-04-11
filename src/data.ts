@@ -24,7 +24,7 @@ export const info = {
 export const daymeans = {
   key: 2,
   title: "Daily Value Means",
-  color: "#8884d8",
+  color: "#FF8042",
   dataKey: "mean",
   data: [
     {
