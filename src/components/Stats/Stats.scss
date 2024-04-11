@@ -1,0 +1,22 @@
+.stats {
+  color: white;
+  .top {
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+    span {
+      font-size: 20px;
+    }
+  }
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

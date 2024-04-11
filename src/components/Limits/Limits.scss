@@ -1,0 +1,27 @@
+.top {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  span {
+    color: yellow;
+    font-size: 20px;
+  }
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .min {
+    color: lawngreen;
+  }
+  .max {
+    color: tomato;
+  }
+}

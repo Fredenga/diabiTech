@@ -1,0 +1,34 @@
+.mainBox {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+
+  .box {
+    padding: 20px;
+    border: 2px solid gray;
+  }
+  .box1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-column: span 3;
+    grid-row: span 2;
+
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 15px;
+    }
+  }
+  .box2 {
+    grid-column: span 2;
+    grid-row: span 3;
+    padding: 10px;
+  }
+  .box5 {
+    grid-row: span 2;
+    background-color: white;
+  }
+}
