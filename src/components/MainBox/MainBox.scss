@@ -15,7 +15,6 @@
     align-items: center;
     justify-content: space-between;
     grid-column: span 3;
-    grid-row: span 2;
 
     h1 {
       font-size: 20px;
@@ -31,5 +30,10 @@
   }
   .box5 {
     background-color: white;
+  }
+  .box6 {
+    grid-column: span 2;
+    grid-row: span 2;
+    padding: 10px;
   }
 }

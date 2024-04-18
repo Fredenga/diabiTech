@@ -10,7 +10,6 @@ const TopBox = () => {
           <div className="date">Today</div>
         </div>
       </div>
-      <span>Device Connected</span>
     </div>
   );
 };

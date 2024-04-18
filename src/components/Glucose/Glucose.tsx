@@ -1,4 +1,6 @@
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
   Label,
   Legend,
@@ -11,7 +13,7 @@ import {
 } from "recharts";
 import "./Glucose.scss";
 
-interface Props {
+export interface IProps {
   title: string;
   data: Object[];
   color: string;
@@ -19,12 +21,16 @@ interface Props {
   dataKey: string;
 }
 
-const Glucose: React.FC<Props> = ({ color, data, dataKey }) => {
+const Glucose: React.FC<IProps> = ({ color, data, dataKey, title }) => {
+  const getFill = (value: number): string => {
+    const fill: string = value < 80 || value > 180 ? "#FD0909" : "#4FFD09";
+    return fill;
+  };
   return (
     <div className="glucose">
-      {/* <h1>{title}</h1> */}
-      <ResponsiveContainer width="99%" height="90%">
-        <LineChart width={300} height={180} data={data}>
+      <h1>{title}</h1>
+      <ResponsiveContainer width="99%" height="75%">
+        {/* <LineChart width={300} height={180} data={data}>
           <Tooltip />
           <Legend align="right" />
           <XAxis dataKey="timestamp">
@@ -38,7 +44,7 @@ const Glucose: React.FC<Props> = ({ color, data, dataKey }) => {
               position="left"
             />
           </YAxis>
-          <CartesianGrid stroke="#f5f5f5" />
+          <CartesianGrid strokeDasharray="3 3" strokeWidth={1} stroke="#ccc" />
           <Line
             type="monotone"
             dataKey={dataKey}
@@ -46,7 +52,31 @@ const Glucose: React.FC<Props> = ({ color, data, dataKey }) => {
             strokeWidth={2}
             dot={false}
           />
-        </LineChart>
+        </LineChart> */}
+
+        <AreaChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="timestamp">
+            <Label value="Seconds" offset={0} position="bottom" />
+          </XAxis>
+          <YAxis dataKey="bg_value">
+            <Label
+              value="Blood Glucose Values"
+              offset={-15}
+              angle={-90}
+              position="left"
+            />
+          </YAxis>
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey={dataKey}
+            stackId="1"
+            stroke="#82ca9d"
+            fill={getFill(150)}
+            fillOpacity={0.5}
+          />
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

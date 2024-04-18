@@ -1,13 +1,16 @@
 .sidebar {
-  // flex: 1;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  flex: 1;
-  height: 100;
-  background-color: #8884d8;
+  height: 100vh;
+  background-color: #dcd1f1;
+  flex: 0, 0 auto;
+  backdrop-filter: blur(50px);
+  box-shadow: 10px 6px 33px 2px rgba(216, 203, 237, 0.75);
+  -webkit-box-shadow: 10px 6px 33px 2px rgba(216, 203, 237, 0.75);
+  -moz-box-shadow: 10px 6px 33px 2px rgba(216, 203, 237, 0.75);
+  top: 0;
+  position: sticky;
+
   padding: 10px;
-  color: white;
+  color: rgb(136, 132, 216);
   .logoContainer {
     display: flex;
     align-items: center;
@@ -25,7 +28,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: white;
       gap: 10px;
       margin-bottom: 15px;
       &:hover {
