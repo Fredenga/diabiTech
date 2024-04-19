@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 import "./Sidebar.scss";
 
 const Sidebar = () => {
@@ -8,18 +10,19 @@ const Sidebar = () => {
         <h1>DiabiTech</h1>
       </div>
       <div className="iconsContainer">
-        <div className="icon">
-          <img src="/home.png" alt="home" />
+        <Link to="/" className="icon">
+          {/* <img src="/home.png" alt="home" /> */}
+          <HomeIcon className="mainIcon" />
           <span>Home</span>
-        </div>
+        </Link>
         <div className="icon">
           <img src="/info-button.png" alt="about" />
           <span>About</span>
         </div>
-        <div className="icon">
+        <Link to="/data" className="icon">
           <img src="/analytics.png" alt="" />
-          <span>History</span>
-        </div>
+          <span>Data</span>
+        </Link>
         <div className="icon">
           <img src="/profile.png" alt="" />
           <span>Profile</span>

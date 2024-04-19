@@ -1,3 +1,4 @@
+import UseSpeechToText from "../../hooks/useSpeechToText";
 import "./TopBox.scss";
 
 const TopBox = () => {
@@ -7,7 +8,8 @@ const TopBox = () => {
         <h1>Health Care</h1>
         <div className="right">
           <img src="/settings.png" alt="notifications" />
-          <div className="date">Today</div>
+
+          <UseSpeechToText />
         </div>
       </div>
     </div>

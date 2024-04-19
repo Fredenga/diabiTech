@@ -25,7 +25,9 @@
     justify-content: space-around;
 
     .icon {
+      text-decoration: none;
       display: flex;
+      color: inherit;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
