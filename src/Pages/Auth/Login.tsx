@@ -42,15 +42,17 @@ const Login = () => {
       </div>
       <div className="registration-form">
         <h2>Sign in into your Account</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
+            name="email"
             value={formData.email}
             placeholder="Enter your email..."
             onChange={handleChange}
           />
           <input
             type="password"
+            name="password"
             value={formData.password}
             placeholder="Enter your password..."
             onChange={handleChange}
