@@ -1,0 +1,14 @@
+{
+  "data": [
+    { "timestamp": "2024-03-30T12:00:00", "bg_value": 100 },
+    { "timestamp": "2024-03-30T12:05:00", "bg_value": 110 },
+    { "timestamp": "2024-03-30T12:10:00", "bg_value": 120 },
+    { "timestamp": "2024-03-30T12:15:00", "bg_value": 115 },
+    { "timestamp": "2024-03-30T12:20:00", "bg_value": 105 },
+    { "timestamp": "2024-03-30T12:00:00", "bg_value": 70 },
+    { "timestamp": "2024-03-30T12:05:00", "bg_value": 110 },
+    { "timestamp": "2024-03-30T12:10:00", "bg_value": 157 },
+    { "timestamp": "2024-03-30T12:15:00", "bg_value": 161 },
+    { "timestamp": "2024-03-30T12:20:00", "bg_value": 124 }
+  ]
+}

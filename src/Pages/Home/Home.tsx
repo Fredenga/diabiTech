@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Mainbar from "../../components/Mainbar/Mainbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Home.scss";
@@ -8,7 +8,31 @@ import { db } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 
 const Home = () => {
-  const { currentUser } = useContext(AuthContext);
+  const [arr, setArr] = useState({});
+  async function predict() {
+    try {
+      const pred = await axios.post(
+        "https://bg-prediction-server.onrender.com/api/v1/predict",
+        {
+          data: [
+            { timestamp: "2024-03-30T12:00:00", bg_value: 98 },
+            { timestamp: "2024-03-30T12:05:00", bg_value: 102 },
+            { timestamp: "2024-03-30T12:10:00", bg_value: 105 },
+            { timestamp: "2024-03-30T12:15:00", bg_value: 100 },
+            { timestamp: "2024-03-30T12:20:00", bg_value: 99 },
+            { timestamp: "2024-03-30T12:00:00", bg_value: 104 },
+            { timestamp: "2024-03-30T12:05:00", bg_value: 110 },
+            { timestamp: "2024-03-30T12:10:00", bg_value: 113 },
+            { timestamp: "2024-03-30T12:15:00", bg_value: 119 },
+            { timestamp: "2024-03-30T12:20:00", bg_value: 126 }
+          ]
+        }
+      );
+      console.log(pred.data);
+    } catch (error) {
+      console.log(`error occured: ${error}`);
+    }
+  }
   useEffect(() => {
     async function Attempt() {
       const channelId = "2497506";
@@ -25,16 +49,13 @@ const Home = () => {
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => existingIds.add(doc.data().entry_id));
-        console.log(existingIds.size);
-
         // Add missing documents
         for (const feed of feeds) {
-          console.log(feed);
           if (!existingIds.has(feed.entry_id)) {
             await addDoc(colRef, {
-              date: feed.created_at,
               entry_id: feed.entry_id,
-              reading: feed.field1,
+              bg_value: feed.field1,
+              timestamp: feed.created_at
             });
             console.log(`Added document with entry_id: ${feed.entry_id}`);
           }
@@ -44,7 +65,8 @@ const Home = () => {
       }
     }
     Attempt();
-  }, []);
+    predict();
+  }, [predict]);
   return (
     <div className="home">
       <Sidebar />
