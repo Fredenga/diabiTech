@@ -10,6 +10,11 @@
     flex: 1;
     color: #6c65e0;
     font-weight: normal;
+
+    .span {
+      text-decoration: none;
+      color: inherit;
+    }
   }
   .imgBox {
     flex: 1;

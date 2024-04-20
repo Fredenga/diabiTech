@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   CartesianGrid,
   Label,
@@ -61,7 +61,7 @@ const Predictions = () => {
       }
     }
     predict();
-  }, []);
+  }, [sendData, values]);
 
   return (
     <div className="predictions">
@@ -72,7 +72,7 @@ const Predictions = () => {
             <Tooltip />
             <Legend align="right" />
             <XAxis dataKey="ID">
-              <Label value="ID" offset={0} position="bottom" />
+              <Label value="Forecast ID" offset={0} position="bottom" />
             </XAxis>
             <YAxis dataKey="bg_value" domain={[50, 150]}>
               <Label

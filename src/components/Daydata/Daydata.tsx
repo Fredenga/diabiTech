@@ -4,25 +4,22 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
 import "./Daydata.scss";
+import { useContext } from "react";
+import { DataContext } from "../../context/dataContext";
+import { DayMeanValues } from "../../math/mean";
 
-interface Props {
-  title: string;
-  data: Object[];
-  color: string;
-  key: number;
-  dataKey: string;
-}
-
-const Daydata: React.FC<Props> = ({ data, dataKey, title }) => {
+const Daydata = () => {
+  const { data } = useContext(DataContext);
+  const means = DayMeanValues(data);
   return (
     <div className="daydata">
-      <span>{title}</span>
+      <span>Date Mean Values</span>
       <div className="chart">
         <ResponsiveContainer width="99%" height="100%">
-          <BarChart width={200} height={100} data={data}>
+          <BarChart width={200} height={100} data={means}>
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip
@@ -30,7 +27,7 @@ const Daydata: React.FC<Props> = ({ data, dataKey, title }) => {
               labelStyle={{ display: "none" }}
               cursor={{ fill: "none" }}
             />
-            <Bar dataKey={dataKey} fill="#8884d8" />
+            <Bar dataKey="mean_value" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       </div>
