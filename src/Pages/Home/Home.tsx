@@ -1,42 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Mainbar from "../../components/Mainbar/Mainbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Home.scss";
 import axios from "axios";
 import { addDoc, collection, getDocs, query } from "firebase/firestore";
 import { db } from "../../firebase";
-import { AuthContext } from "../../context/authContext";
+import { DataContext, GlucoseData } from "../../context/dataContext";
 
 const Home = () => {
-  const [arr, setArr] = useState({});
-  async function predict() {
-    try {
-      const pred = await axios.post(
-        "https://bg-prediction-server.onrender.com/api/v1/predict",
-        {
-          data: [
-            { timestamp: "2024-03-30T12:00:00", bg_value: 98 },
-            { timestamp: "2024-03-30T12:05:00", bg_value: 102 },
-            { timestamp: "2024-03-30T12:10:00", bg_value: 105 },
-            { timestamp: "2024-03-30T12:15:00", bg_value: 100 },
-            { timestamp: "2024-03-30T12:20:00", bg_value: 99 },
-            { timestamp: "2024-03-30T12:00:00", bg_value: 104 },
-            { timestamp: "2024-03-30T12:05:00", bg_value: 110 },
-            { timestamp: "2024-03-30T12:10:00", bg_value: 113 },
-            { timestamp: "2024-03-30T12:15:00", bg_value: 119 },
-            { timestamp: "2024-03-30T12:20:00", bg_value: 126 }
-          ]
-        }
-      );
-      console.log(pred.data);
-    } catch (error) {
-      console.log(`error occured: ${error}`);
-    }
-  }
+  const { dispatch } = useContext(DataContext);
+  const fetched: GlucoseData[] = [];
+
   useEffect(() => {
     async function Attempt() {
-      const channelId = "2497506";
-      const apiKey = "4CLGJVET3T65I7UG";
+      const channelId = process.env.REACT_APP_THINGSPEAK_CHANNEL_ID;
+      const apiKey = process.env.REACT_APP_THINGSPEAK_API_KEY;
 
       const apiUrl = `https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}`;
       const colRef = collection(db, "glucoseData");
@@ -54,19 +32,44 @@ const Home = () => {
           if (!existingIds.has(feed.entry_id)) {
             await addDoc(colRef, {
               entry_id: feed.entry_id,
-              bg_value: feed.field1,
-              timestamp: feed.created_at
+              glucoseData: {
+                bg_value: feed.field1,
+                timestamp: feed.created_at
+              }
             });
             console.log(`Added document with entry_id: ${feed.entry_id}`);
           }
         }
+        const { docs } = await getDocs(q);
+        // dispatch({ type: "ADD_DATA", payload: docs as any });
+
+        docs.forEach((doc) => {
+          const docData = doc.data() as {
+            // Cast document data to your expected type
+            entry_id: number;
+            glucoseData: {
+              timestamp: string;
+              bg_value: number;
+            };
+          };
+
+          fetched.push({
+            entry_id: docData.entry_id,
+            glucoseData: {
+              timestamp: docData.glucoseData.timestamp,
+              bg_value: docData.glucoseData.bg_value
+            }
+          });
+        });
+        const sortedData = fetched.sort((a, b) => a.entry_id - b.entry_id);
+        dispatch({ type: "ADD_DATA", payload: sortedData });
       } catch (error) {
         console.log(error);
       }
     }
     Attempt();
-    predict();
-  }, [predict]);
+    // predict();
+  }, []);
   return (
     <div className="home">
       <Sidebar />

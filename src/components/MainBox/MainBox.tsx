@@ -14,7 +14,7 @@ const MainBox = () => {
         <HelloBox />
       </div>
       <div className="box box2">
-        <Glucose {...info} />
+        <Glucose />
       </div>
       <div className="box box3">
         <Limits />
