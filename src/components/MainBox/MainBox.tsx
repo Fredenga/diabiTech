@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { daymeans, info } from "../../data";
 import Daydata from "../Daydata/Daydata";
 import Glucose from "../Glucose/Glucose";
@@ -19,14 +20,12 @@ const MainBox = () => {
       <div className="box box3">
         <Limits />
       </div>
-      <div className="box box4">
-        <Stats />
-      </div>
+      <div className="box box4">{/* <Stats /> */}</div>
       <div className="box box5">
         <Daydata {...daymeans} />
       </div>
       <div className="box box6">
-        <Predictions {...info} />
+        <Predictions />
       </div>
       <div className="box box7">boxes7</div>
       <div className="box box8">boxes8</div>

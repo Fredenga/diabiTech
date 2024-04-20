@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import {
   CartesianGrid,
   Label,
@@ -8,40 +8,95 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from "recharts";
-import { IProps } from "../Glucose/Glucose";
 import "./Predictions.scss";
+import { DataContext } from "../../context/dataContext";
+import axios from "axios";
+import moment from "moment";
+import { convertStringToArray } from "../Stats/calculations";
 
-const Predictions: FC<IProps> = ({ data, dataKey, color }) => {
+type Chart = {
+  ID: number;
+  bg_value: number;
+};
+
+const Predictions = () => {
+  const { data } = useContext(DataContext);
+  const glucoseData = data.map((item) => item.glucoseData);
+  const sendData = glucoseData.map((item) => {
+    const newItem = item;
+    newItem.timestamp = moment(item.timestamp).format("YYYY-MM-DDTHH:mm:ss");
+    newItem.bg_value = Math.floor(item.bg_value);
+    return newItem;
+  });
+  const [values, setValues] = useState<number[]>([]);
+  const [charts, setCharts] = useState<Chart[]>([]);
+  // const lastRecords = sendData.slice(sendData.length - 6);
+  useEffect(() => {
+    async function predict() {
+      try {
+        const pred = await axios.post(
+          "https://bg-prediction-server.onrender.com/api/v1/predict",
+          {
+            data: sendData
+          }
+        );
+
+        const firstKey = Object.keys(pred.data)[0];
+        const firstValue: string = pred.data[firstKey];
+
+        const vl = convertStringToArray(firstValue);
+        vl.pop();
+        setValues(vl);
+
+        let count: number = 0;
+        let my: Chart[] = [];
+        values.forEach((item) => {
+          my.push({ ID: count++, bg_value: item });
+        });
+        setCharts(my);
+      } catch (error) {
+        console.log(`error occured: ${error}`);
+      }
+    }
+    predict();
+  }, []);
+
   return (
     <div className="predictions">
-      <h1>Blood Glucose Forecast</h1>
-      <ResponsiveContainer width="99%" height="85%">
-        <LineChart width={300} height={180} data={data}>
-          <Tooltip />
-          <Legend align="right" />
-          <XAxis dataKey="timestamp">
-            <Label value="Seconds" offset={0} position="bottom" />
-          </XAxis>
-          <YAxis dataKey="bg_value">
-            <Label
-              value="Predicted Values"
-              offset={-15}
-              angle={-90}
-              position="left"
+      <h1>Blood Glucose Forecasts</h1>
+      {charts.length > 0 && (
+        <ResponsiveContainer width="99%" height="85%">
+          <LineChart width={300} height={180} data={charts}>
+            <Tooltip />
+            <Legend align="right" />
+            <XAxis dataKey="ID">
+              <Label value="ID" offset={0} position="bottom" />
+            </XAxis>
+            <YAxis dataKey="bg_value" domain={[50, 150]}>
+              <Label
+                value="Predicted Values"
+                offset={-15}
+                angle={-90}
+                position="left"
+              />
+            </YAxis>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              strokeWidth={1}
+              stroke="#ccc"
             />
-          </YAxis>
-          <CartesianGrid strokeDasharray="3 3" strokeWidth={1} stroke="#ccc" />
-          <Line
-            type="monotone"
-            dataKey={dataKey}
-            stroke={color}
-            strokeWidth={2}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+            <Line
+              type="monotone"
+              dataKey="bg_value"
+              stroke="#8884d8"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 };
