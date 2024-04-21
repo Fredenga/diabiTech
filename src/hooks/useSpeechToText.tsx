@@ -75,6 +75,10 @@ const UseSpeechToText: React.FC = () => {
         A low standard deviation indicates that your blood sugar levels are relatively stable and don't fluctuate much throughout the day. This is generally considered desirable for good diabetic control.
         A high standard deviation suggests significant swings in your blood sugar levels. This can be caused by various factors like diet, exercise, medication, or underlying health conditions
         `);
+      } else if (spokenText.includes("What is mean value")) {
+        speak(
+          "Mean value signifies the average of all blood glucose values of the day"
+        );
       }
     };
 

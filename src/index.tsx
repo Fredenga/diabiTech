@@ -4,6 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./context/authContext";
 import { DataContextProvider } from "./context/dataContext";
+import { PredContextProvider } from "./context/predContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <AuthContextProvider>
     <DataContextProvider>
-      <App />
+      <PredContextProvider>
+        <App />
+      </PredContextProvider>
     </DataContextProvider>
   </AuthContextProvider>
 );

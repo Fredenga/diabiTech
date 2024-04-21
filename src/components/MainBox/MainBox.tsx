@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Daydata from "../Daydata/Daydata";
 import Glucose from "../Glucose/Glucose";
 import HelloBox from "../HelloBox/HelloBox";

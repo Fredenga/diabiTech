@@ -15,6 +15,7 @@ import { DataContext } from "../../context/dataContext";
 import axios from "axios";
 import moment from "moment";
 import { convertStringToArray } from "../Stats/calculations";
+import { PredContext } from "../../context/predContext";
 
 type Chart = {
   ID: number;
@@ -34,6 +35,7 @@ const Predictions = () => {
   });
   const [values, setValues] = useState<number[]>([]);
   const [charts, setCharts] = useState<Chart[]>([]);
+  const { dispatch } = useContext(PredContext);
   // const lastRecords = sendData.slice(sendData.length - 6);
   useEffect(() => {
     async function predict() {
@@ -58,6 +60,7 @@ const Predictions = () => {
           my.push({ ID: count++, bg_value: item });
         });
         setCharts(my);
+        dispatch({ type: "ADD_DATA", payload: charts });
         lastVal = charts[charts.length - 1].bg_value;
       } catch (error) {
         console.log(`error occured: ${error}`);
@@ -74,7 +77,7 @@ const Predictions = () => {
           <LineChart width={300} height={180} data={charts}>
             <Tooltip />
             <Legend align="right" />
-            <XAxis dataKey="ID">
+            <XAxis dataKey="ID" domain={[0, charts.length]}>
               <Label value="Forecast ID" offset={0} position="bottom" />
             </XAxis>
             <YAxis dataKey="bg_value" domain={[50, 150]}>

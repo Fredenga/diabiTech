@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import "./Sidebar.scss";
+import LogOutSpan from "../../Pages/Auth/LogOut";
+import { Logout } from "@mui/icons-material";
 
 const Sidebar = () => {
   return (
@@ -28,8 +30,8 @@ const Sidebar = () => {
           <span>Profile</span>
         </div>
         <div className="icon">
-          <img src="/settings.png" alt="" />
-          <span>Settings</span>
+          <Logout className="mainIcon" />
+          <LogOutSpan />
         </div>
       </div>
     </div>
