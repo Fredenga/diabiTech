@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import Daydata from "../Daydata/Daydata";
 import Glucose from "../Glucose/Glucose";
 import HelloBox from "../HelloBox/HelloBox";
+import Insights from "../Insights/Insights";
 import Limits from "../Limits/Limits";
 import Predictions from "../Predictions/Predictions";
+import Recommendations from "../Recommendation/Recommendation";
 import Stats from "../Stats/Stats";
 import "./MainBox.scss";
 
@@ -27,8 +30,12 @@ const MainBox = () => {
       <div className="box box6">
         <Predictions />
       </div>
-      <div className="box box7">boxes7</div>
-      <div className="box box8">boxes8</div>
+      <div className="box box7">
+        <Insights />
+      </div>
+      <div className="box box8">
+        <Recommendations />
+      </div>
     </div>
   );
 };

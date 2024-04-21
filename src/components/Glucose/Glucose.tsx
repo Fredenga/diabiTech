@@ -42,7 +42,7 @@ const Glucose = () => {
           <AreaChart data={plotted}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="timestamp" tickCount={5}>
-              <Label value="Seconds" offset={0} position="bottom" />
+              <Label value="Timestamp" offset={0} position="bottom" />
             </XAxis>
             <YAxis dataKey="bg_value" domain={[40, 200]}>
               <Label

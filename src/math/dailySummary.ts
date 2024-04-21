@@ -1,13 +1,15 @@
 import { GlucoseData } from "../context/dataContext";
 
-export function calculateDailySummary(data: GlucoseData[]): {
-  date: string;
-  min: number;
-  max: number;
-  mean: number;
-  std_dev: number;
-  normalCount: number;
-}[] {
+export async function calculateDailySummary(data: GlucoseData[]): Promise<
+  {
+    date: string;
+    min: number;
+    max: number;
+    mean: number;
+    std_dev: number;
+    normalCount: number;
+  }[]
+> {
   // Daily summary object to store calculated values (using a Map for efficient lookups)
   const dailySummary = new Map<
     string,

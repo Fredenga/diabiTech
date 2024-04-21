@@ -15,10 +15,10 @@ const Sidebar = () => {
           <HomeIcon className="mainIcon" />
           <span>Home</span>
         </Link>
-        <div className="icon">
+        {/* <div className="icon">
           <img src="/info-button.png" alt="about" />
           <span>About</span>
-        </div>
+        </div> */}
         <Link to="/data" className="icon">
           <img src="/analytics.png" alt="" />
           <span>Data</span>

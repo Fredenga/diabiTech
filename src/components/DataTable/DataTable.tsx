@@ -4,6 +4,10 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { DataContext } from "../../context/dataContext";
 import { calculateDailySummary } from "../../math/dailySummary";
 
+export let dayMinMax: {
+  min: number;
+  max: number;
+} = { min: 0, max: 0 };
 export default function DataTable() {
   const { data } = React.useContext(DataContext);
   const [totals, setTotals] = React.useState<Totals[]>([]);
@@ -53,21 +57,28 @@ export default function DataTable() {
   }
 
   React.useEffect(() => {
-    const vals = calculateDailySummary(data);
-    let count = 0;
-    function getTotals() {
-      let final: any[] = [];
-      vals.forEach((val) => {
-        final.push({ id: count++, ...val });
-      });
-      setTotals(final);
+    async function getData() {
+      const vals = await calculateDailySummary(data);
+      let count = 0;
+      function getTotals() {
+        let final: any[] = [];
+        vals.forEach((val) => {
+          final.push({ id: count++, ...val });
+        });
+        setTotals(final);
+      }
+      getTotals();
+      dayMinMax = {
+        min: totals[totals.length - 1].min,
+        max: totals[totals.length - 1].max
+      };
     }
-    getTotals();
+    getData();
   }, []);
 
   return (
     <Box sx={{ height: 400, width: "90%" }}>
-      {totals.length > 0 && (
+      {data.length > 0 && totals.length > 0 && (
         <DataGrid
           className="dataGrid"
           columns={columns}

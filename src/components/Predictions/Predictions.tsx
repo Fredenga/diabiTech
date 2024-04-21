@@ -21,6 +21,8 @@ type Chart = {
   bg_value: number;
 };
 
+export let lastVal: number = 0;
+
 const Predictions = () => {
   const { data } = useContext(DataContext);
   const glucoseData = data.map((item) => item.glucoseData);
@@ -56,6 +58,7 @@ const Predictions = () => {
           my.push({ ID: count++, bg_value: item });
         });
         setCharts(my);
+        lastVal = charts[charts.length - 1].bg_value;
       } catch (error) {
         console.log(`error occured: ${error}`);
       }

@@ -5,7 +5,7 @@ const Limits = () => {
     <div className="limits">
       <div className="top">
         <img src="/heartrate.png" alt="heartrate" />
-        <span>Glycemic Limits</span>
+        <span>Normal Glucose Thresholds</span>
       </div>
       <div className="bottom">
         <span className="min">Min: 80mg/dL</span>
